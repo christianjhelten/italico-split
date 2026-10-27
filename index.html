@@ -197,7 +197,7 @@ li.tile.gone .who{display:block;font-size:13px;color:var(--ink-2);margin-top:2px
 <main>
   <header class="hero">
     <h1>Dinner at iTalico.</h1>
-    <p class="intro">Sunday, October&nbsp;26. Table&nbsp;50. Twenty-two of us.</p>
+    <p class="intro">Sunday, October&nbsp;26. Table&nbsp;50.</p>
     <p class="lede">Christian picked up the check. Choose what you had and the page works out your part, with your share of the service fee, tax and tip included. Once you've paid, tap <b>I've paid</b> and your items come off the list for everyone else.</p>
   </header>
 
@@ -220,7 +220,7 @@ li.tile.gone .who{display:block;font-size:13px;color:var(--ink-2);margin-top:2px
       </section>
       <section class="collected" id="collected" aria-labelledby="col-h" hidden>
         <h2 id="col-h">Paid so far.</h2>
-        <p class="num"><b id="c-sum">$0.00</b> <span class="muted">of $1,249.15 · <span id="c-count">0</span> of 22 people</span></p>
+        <p class="num"><b id="c-sum">$0.00</b> <span class="muted">of $1,249.15 · <span id="c-count">0 people</span> paid</span></p>
         <div class="meter" aria-hidden="true"><span id="c-bar"></span></div>
         <ul id="c-list"></ul>
       </section>
@@ -475,7 +475,7 @@ li.tile.gone .who{display:block;font-size:13px;color:var(--ink-2);margin-top:2px
     if (!db) return;
     const sum = claims.reduce((a, c) => a + (+c.total || 0), 0);
     out("c-sum").textContent = money(sum);
-    out("c-count").textContent = claims.length;
+    out("c-count").textContent = claims.length + (claims.length === 1 ? " person" : " people");
     out("c-bar").style.width = Math.min(100, sum / BILL * 100) + "%";
     const ul = out("c-list"); ul.textContent = "";
     if (!claims.length) {
@@ -609,7 +609,7 @@ li.tile.gone .who{display:block;font-size:13px;color:var(--ink-2);margin-top:2px
   }};
   const listeners = [];
   function pull(){ supaDb.collection().get().then(s => listeners.forEach(f => f(s))).catch(() => {}); }
-  // ponytail: polls every 15 s instead of a websocket; plenty for 22 people paying over two weeks
+  // ponytail: polls every 15 s instead of a websocket; plenty for a big table paying over two weeks
   setInterval(() => { if (!document.hidden) pull(); }, 15000);
   document.addEventListener("visibilitychange", () => { if (!document.hidden) pull(); });
 
