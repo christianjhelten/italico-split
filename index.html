@@ -67,7 +67,7 @@ a:hover{text-decoration:underline}
   .gallery summary{display:none}
 }
 .gallery{display:grid;gap:16px}
-.gallery details{background:var(--surface);border-radius:18px;overflow:hidden}
+.gallery .receipt{margin:0;background:var(--surface);border-radius:18px;overflow:hidden}
 .gallery summary{cursor:pointer;list-style:none;padding:16px 20px;font-weight:600;display:flex;justify-content:space-between;align-items:center}
 .gallery summary::-webkit-details-marker{display:none}
 .gallery summary::after{content:"›";font-size:24px;line-height:1;color:var(--ink-2);transform:rotate(90deg);transition:transform .2s}
@@ -203,10 +203,9 @@ li.tile.gone .who{display:block;font-size:13px;color:var(--ink-2);margin-top:2px
 
   <div class="stage">
     <aside class="gallery" aria-label="The check">
-      <details id="receipt">
-        <summary>See the receipt</summary>
-        <img src="receipt.jpg" width="800" height="1975" alt="The printed iTalico receipt: 30 items, employee care fee $32.72, subtotal $967.72, tax $94.43, total $1,062.15; previous payment $220.00, then $842.15 plus $187.00 tip, $1,029.15 paid by Christian Helten. Card details cut out." loading="lazy">
-      </details>
+      <figure id="receipt" class="receipt">
+        <img src="receipt.jpg" width="800" height="1975" alt="The printed iTalico receipt: 30 items, employee care fee $32.72, subtotal $967.72, tax $94.43, total $1,062.15; previous payment $220.00, then $842.15 plus $187.00 tip, $1,029.15 paid by Christian Helten. Card details cut out.">
+      </figure>
       <section class="check" aria-labelledby="check-h">
         <h2 id="check-h">The check.</h2>
         <dl class="num">
@@ -574,10 +573,6 @@ li.tile.gone .who{display:block;font-size:13px;color:var(--ink-2);margin-top:2px
     } finally { busy = false; }
   }
 
-  // Receipt: open on wide screens, collapsible on phones.
-  const wide = matchMedia("(min-width: 900px)");
-  const syncReceipt = () => { if (wide.matches) out("receipt").open = true; };
-  syncReceipt(); wide.addEventListener("change", syncReceipt);
 
   groupsEl.addEventListener("change", render);
   nameEl.addEventListener("input", render);
