@@ -351,7 +351,9 @@ li.tile.gone .who{display:block;font-size:13px;color:var(--ink-2);margin-top:2px
   function fmtUnits(t){ // 1/2520ths -> "2", "1/3", "1 and 1/2"
     const w = Math.floor(t / D), r = t % D;
     if (!r) return String(w);
-    const g = gcd(r, D), f = (r / g) + "/" + (D / g);
+    const g = gcd(r, D), den = D / g;
+    if (den > 4) { const x = +(t / D).toFixed(1); return x ? "about " + x : "a little"; } // 4/21 and friends read as noise; the exact check stays in ticks
+    const f = (r / g) + "/" + den;
     return w ? w + " and " + f : f;
   }
   const ITEM = new Map(ITEMS.map(([g, n, u, q]) => [slug(n), {g, name: n, unit: u, qty: q}]));
